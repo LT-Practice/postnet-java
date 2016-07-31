@@ -10,6 +10,30 @@ public class ZipcodeTranslaterTest {
     ZipcodeTranslater zipcodeTranslater = new ZipcodeTranslater();
 
     @Test
+    public void zipcodeTransformToBarcode() throws Exception {
+        JSONObject checkedZipcode = new JSONObject("{'zipcode':'12345','type':true}");
+
+        String[] barcodeArray = zipcodeTranslater.zipcodeTransformToBarcode(checkedZipcode);
+
+        String[] expected = {":::||", "::|:|", "::||:", ":|::|", ":|:|:", ":|:|:"};
+
+        assertArrayEquals(expected, barcodeArray);
+    }
+
+
+    @Test
+    public void buildBarcode() throws Exception {
+        String[] barcodeArray = {":::||", "::|:|", "::||:", ":|::|", ":|:|:", ":|:|:"};
+
+        String barcode = zipcodeTranslater.buildBarcode(barcodeArray);
+
+        String expected = "|:::||::|:|::||::|::|:|:|::|:|:|";
+
+        assertEquals(expected, barcode);
+    }
+
+
+    @Test
     public void matchBarcode() throws Exception {
         String[] zipcodeArrayWithCheckDigit = {"1", "2", "3", "4", "5", "5"};
 
@@ -21,8 +45,6 @@ public class ZipcodeTranslaterTest {
     }
 
 
-
-
     //6-3
     @Test
     public void addCheckDigit() throws Exception {
@@ -32,11 +54,9 @@ public class ZipcodeTranslaterTest {
 
         String[] expected = {"1", "2", "3", "4", "5", "5"};
 
-        assertArrayEquals(expected,zipcodeArrayWithCheckDigit);
+        assertArrayEquals(expected, zipcodeArrayWithCheckDigit);
 
     }
-
-
 
 
     //#6-2
@@ -48,7 +68,7 @@ public class ZipcodeTranslaterTest {
 
         String[] expected = {"4", "5", "0", "5", "6", "1", "2", "3", "4"};
 
-        assertArrayEquals(expected,zipcodeArray);
+        assertArrayEquals(expected, zipcodeArray);
 
     }
 
@@ -62,10 +82,11 @@ public class ZipcodeTranslaterTest {
 
         String expected = "450561234";
 
-        assertEquals(expected,formattedZipcode);
+        assertEquals(expected, formattedZipcode);
 
 
     }
+
     @Test
     public void formatZipcode2() throws Exception {
         JSONObject checkedZipcode = new JSONObject("{'zipcode':'45056','type':true}");
@@ -74,7 +95,7 @@ public class ZipcodeTranslaterTest {
 
         String expected = "45056";
 
-        assertEquals(expected,formattedZipcode);
+        assertEquals(expected, formattedZipcode);
 
 
     }
@@ -142,8 +163,6 @@ public class ZipcodeTranslaterTest {
         assertEquals(expected.toString(), checkedZipcode.toString());
 
     }
-
-
 
 
 }
