@@ -10,6 +10,19 @@ import java.util.regex.Pattern;
 
 public class ZipcodeTranslater {
 
+    //all
+    JSONObject zipcodeToBarcode(String zipcode) throws JSONException {
+        JSONObject checkedZipcode = checkZipcode(zipcode);
+        String[] barcodeArray = zipcodeTransformToBarcode(checkedZipcode);
+        String barcode = buildBarcode(barcodeArray);
+        boolean type = Boolean.parseBoolean(checkedZipcode.getString("type"));
+        JSONObject result = new JSONObject();
+        result.put("barcode", barcode);
+        result.put("type", type);
+        return result;
+
+    }
+
     //#5
     JSONObject checkZipcode(String zipcode) throws JSONException {
 
@@ -53,7 +66,6 @@ public class ZipcodeTranslater {
 
     //#6-3
     String[] addCheckDigit(String[] zipcodeArray) {
-//        int[] zipcodeNumbers = new int[];
         int sumResult = 0;
         for (String aZipcodeArray : zipcodeArray) {
             sumResult += Integer.parseInt(aZipcodeArray);
@@ -108,6 +120,9 @@ public class ZipcodeTranslater {
 
 
     public static void main(String[] args) throws JSONException {
+        ZipcodeTranslater a = new ZipcodeTranslater();
+        JSONObject ssss = a.zipcodeToBarcode("12345");
+        System.out.println(ssss);
 
     }
 

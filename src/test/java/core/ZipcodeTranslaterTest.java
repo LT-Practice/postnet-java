@@ -7,6 +7,19 @@ import static org.junit.Assert.*;
 
 
 public class ZipcodeTranslaterTest {
+    @Test
+    public void zipcodeToBarcode() throws Exception {
+        String zipcode = "12345";
+
+        JSONObject barcode = zipcodeTranslater.zipcodeToBarcode(zipcode);
+
+        JSONObject expected = new JSONObject("{'barcode':\"|:::||::|:|::||::|::|:|:|::|:|:|\",'type':true}");
+                ;
+
+        assertEquals(expected.toString(), barcode.toString());
+
+    }
+
     ZipcodeTranslater zipcodeTranslater = new ZipcodeTranslater();
 
     @Test
